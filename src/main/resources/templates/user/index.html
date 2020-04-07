@@ -1,0 +1,136 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Index</title>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/jumbotron/">
+    <!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">	
+   
+  </head>
+  
+  <style>
+  	/* Move down content because we have a fixed navbar that is 3.5rem tall */
+	body {
+  		padding-top: 3.5rem;
+  		background: #1f4287;
+  		font-family: 'Poppins', sans-serif;
+	}
+	
+	.div1 {
+  		background: #21e6c1;
+  	}
+	
+	.jumbotron {
+		/*  background: #3aaf9f; */ 
+		background: #278ea5;
+	}
+	
+	.btn {
+		background: #071e3d;		
+	}
+	
+	.wave{
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		height: 100%;
+		z-index: -1;
+	}
+	
+  </style>
+
+  <body>
+	
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" >JuicePet</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="nav navbar-nav mr-auto">
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/viewAppointment}">View Appointments</a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" th:href="@{/user}">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/logout}">Logout</a>
+        </li>
+      </ul>
+    </div>
+</nav> 
+	<img class="wave" src="../static/images/wave.png" th:src="@{/images/wave.png}">	
+    <main role="main" class="container">
+    <div class="div1 d-flex align-items-center p-3 my-3 text-white-50 rounded box-shadow">
+        <img class="mr-3" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-outline.svg" alt="" width="48" height="48">
+        <div class="lh-100">
+          <h3 class="mb-0 text-dark lh-100">Welcome [[${name}]] </h3>
+        </div>
+      </div>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron"> 
+    	<div class="container">
+      		<h1 class="display-3">Welcome to JuicePet!</h1><br>
+      		<p>Your Pet's Second Best Friend</p>
+      		<p><a class="btn btn-lg text-light" role="button">Book Appointment &#8650;</a></p>
+   
+			 <hr style="background: #f0f0f0;">
+			
+			<form class="form-container" style=" padding:30px; padding-bottom:30px;" method="post"  th:action="@{/insertAppointments}" th:object="${appointment}"> 
+			<input  type="hidden" class="form-control"  placeholder="uid" name="uid" th:value="${us.id}">
+			<div class="form-row">
+    			<div class="form-group col-md-6">
+      				<label class="text-light" for="appointmentDate">Appointment Date:</label>
+     				<input type="date" class="form-control" name="appointmentDate" th:field="*{appointmentDate}"  placeholder="Appointment Date">
+    			</div>
+   				<div class="form-group col-md-6">
+    				<label class="text-light" for="appointmentTime">Appointment Time:</label>
+      				<select id="appointmentTime" type="time" class="form-control" name="timeselect" th:field="*{appointmentTime}">
+        				<option th:value="''">Select Appointment Time</option>
+        				<option th:each="t : ${timelist}" th:value="${t.timeselect} " th:text="${t.timeselect}"></option>
+      				</select>
+ 		 		</div>
+  		 	</div>
+  		 	<div class="form-row">
+    			<div class="form-group col-md-6">
+    				<label class="text-light" for="breed">Select Breed:</label>
+      				<select id="breed" class="form-control" name="breed" th:field="*{breed}">
+        			    <option th:value="''">Select Breed</option>
+        				<option th:value="'Dog'">Dog</option>
+						<option th:value="'Cat'">Cat</option>
+      				</select>
+ 		 		</div>
+   				<div class="form-group col-md-6">
+    				<label class="text-light" for="services">Grooming Services:</label>
+      				<select id="services" class="form-control" name="services" th:field="*{services}">
+        			    <option th:value="''">Choose Services</option>
+        				<option th:value="'Full Grooming'">Full Grooming</option>
+						<option th:value="'Basic Grooming'">Basic Grooming</option>
+      				</select>
+ 		 		</div>
+  		 	</div>
+  		 	<br>
+  			<div class="text-center">
+  		 	<button type="submit" class="btn btn-lg text-light" data-toggle="modal" data-target="#exampleModal">Book Appointment</button>
+			</div>
+			</form>    
+    	</div>
+	</div>
+	<br>
+	
+    </main>
+    <footer class="container">
+      <p class="text-light">Copyright &copy; Juicepet 2020-2021</p>
+    </footer>
+    </body>
+</html>

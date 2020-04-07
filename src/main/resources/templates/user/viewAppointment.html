@@ -1,0 +1,105 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Index</title>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/jumbotron/">
+    <!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">	
+   
+  </head>
+  
+  <style>
+  	/* Move down content because we have a fixed navbar that is 3.5rem tall */
+	body {
+  		padding-top: 3.5rem;
+  		background: #1f4287;
+  		font-family: 'Poppins', sans-serif;
+	}
+	
+	.div1 {
+  		background: #21e6c1;
+  	}
+	
+	.jumbotron {
+		/*  background: #3aaf9f; */ 
+		background: #278ea5;
+	}
+	
+	.btn {
+		background: #071e3d;		
+	}
+	
+	.wave{
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		height: 100%;
+		z-index: -1;
+	}
+	
+  </style>
+
+  <body>
+	
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" >JuicePet</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="nav navbar-nav mr-auto">
+      </ul>
+      <ul class="navbar-nav ml-auto">
+      	<li class="nav-item">
+          <a class="nav-link" th:href="@{/user}">Book Appointment</a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" th:href="@{/user}">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/logout}">Logout</a>
+        </li>
+      </ul>
+    </div>
+</nav> 
+	<img class="wave" src="../static/images/wave.png" th:src="@{/images/wave.png}">	
+    <main role="main" class="container">
+    <br>
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron"> 
+    	<div class="container">
+      		<h1 class="display-3">View Appointments Here!</h1><br>
+      		<hr style="background: #f0f0f0;">	
+      		<table class="table table-light"> 
+			<thead class="table-dark">
+			<tr> 
+			<th>Appointment Date</th> 
+			<th>Appointment Time</th>
+			<th>Breed</th>
+			<th>Services</th>
+			</tr> 
+			</thead>	
+			<tr th:each="user : ${userList}">
+			<td th:text="${user.appointmentDate}">Appointment Date</td> 
+			<td th:text="${user.appointmentTime}">Appointment Time</td>
+			<td th:text="${user.breed}">Breed</td>
+			<td th:text="${user.services}">Services</td>
+			</tr> 
+			</table>
+    	</div>
+	</div>
+	<br>
+	
+    </main>
+    <footer class="container">
+      <p class="text-light">&copy; Juicepet 2020-2021</p>
+    </footer>
+    </body>
+</html>
