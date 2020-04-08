@@ -57,7 +57,7 @@ public class HomeController {
 		model.addAttribute("us", userRepository.findById(user1.getId()).get());
 		model.addAttribute("userList", userRepository.findById(user1.getId()).get().getAppointmentList());
 		model.addAttribute("timelist", timeslotRepository.listTimeSlot(true));
-		return "/user/index";
+		return "user/index";
 	}
 
 	
@@ -97,7 +97,7 @@ public class HomeController {
 		model.addAttribute("user", new User());
 		model.addAttribute("appointment", new Appointment());
 		model.addAttribute("timelist", timeslotRepository.listTimeSlot(true));
-		return "/user/index";
+		return "user/index";
 	}
 	
 	@GetMapping("/viewAppointment")
@@ -105,7 +105,7 @@ public class HomeController {
 		User user1 = userRepository.findByEmail(authentication.getName());
 		model.addAttribute("us", userRepository.findById(user1.getId()).get());
 		model.addAttribute("userList", userRepository.findById(user1.getId()).get().getAppointmentList());
-		return "/user/viewAppointment";
+		return "user/viewAppointment";
 	}
 	
 	
