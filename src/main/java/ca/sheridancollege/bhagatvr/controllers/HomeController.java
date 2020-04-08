@@ -57,7 +57,7 @@ public class HomeController {
 		model.addAttribute("us", userRepository.findById(user1.getId()).get());
 		model.addAttribute("userList", userRepository.findById(user1.getId()).get().getAppointmentList());
 		model.addAttribute("timelist", timeslotRepository.listTimeSlot(true));
-		return "/user/index";
+		return "register";
 	}
 
 	
