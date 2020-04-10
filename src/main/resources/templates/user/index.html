@@ -31,7 +31,7 @@
 		background: #278ea5;
 	}
 	
-	.btn {
+	.btn1 {
 		background: #071e3d;		
 	}
 	
@@ -42,6 +42,15 @@
 		height: 100%;
 		z-index: -1;
 	}
+	
+	$(
+	function () { $('body ').on ('click', '.odom-submit ', function (e ) {
+		$(this .form).submit(); $('#myModal ').modal('hide');
+	
+	}
+	);
+	}
+	);
 	
   </style>
 
@@ -55,13 +64,13 @@
   
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
       <ul class="nav navbar-nav mr-auto">
+      	<li class="nav-item">
+          <a class="nav-link" th:href="@{/}">Home</a>
+        </li>
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <a class="nav-link" th:href="@{/viewAppointment}">View Appointments</a>
-        </li>
-         <li class="nav-item">
-          <a class="nav-link" th:href="@{/user}">Profile</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" th:href="@{/logout}">Logout</a>
@@ -82,7 +91,7 @@
     	<div class="container">
       		<h1 class="display-3">Welcome to JuicePet!</h1><br>
       		<p>Your Pet's Second Best Friend</p>
-      		<p><a class="btn btn-lg text-light" role="button">Book Appointment &#8650;</a></p>
+      		<p><a class="btn1 btn-lg text-light" role="button">Book Appointment &#8650;</a></p>
    
 			 <hr style="background: #f0f0f0;">
 			
@@ -121,11 +130,52 @@
   		 	</div>
   		 	<br>
   			<div class="text-center">
-  		 	<button type="submit" class="btn btn-lg text-light" data-toggle="modal" data-target="#exampleModal">Book Appointment</button>
+  		 	<!-- <button type="submit" class="btn btn-lg text-light" data-toggle="modal" data-target="#exampleModal">Book Appointment</button> -->
+			
+			<div class="modal fade" id="demoModal">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h2 class="modal-title">Confirm Appointment?</h2>
+									<button type="button" class="close" data-dismiss="modal">
+										<span>&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<p>Click on Confirm to book your appointment. Contact JuicePet in case of any changes</p>
+								</div>
+								<div class="modal-footer">
+									<button class="btn btn-danger text-light" data-dismiss="modal" aria-hidden="true">Close</button>
+									<button class="btn btn-success odom-submit">Confirm</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col">
+							<button type="button" id="btnSend" class="btn1 btn-lg text-light" data-toggle="modal" data-target="#demoModal">Book Appointment</button>
+						</div>
+					</div>
 			</div>
-			</form>    
+
+
+			<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+				integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+				crossorigin="anonymous"></script>
+			<script
+				src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+				integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+				crossorigin="anonymous"></script>
+			<script
+				src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+				integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+				crossorigin="anonymous"></script>
+				</form>  
+			</div>  
     	</div>
 	</div>
+	
 	<br>
 	
     </main>

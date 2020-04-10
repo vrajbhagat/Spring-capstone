@@ -7,21 +7,36 @@
 		<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
 		<script src="https://kit.fontawesome.com/a81368914c.js"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">	
-		<link rel="stylesheet" type="text/css" media="all" href="../static/css/mycss.css" th:href="@{/css/mycss.css}" />	
-		<title>Register</title>
+		<!-- <link rel="stylesheet" type="text/css" media="all" href="../static/css/mycss.css" th:href="@{/css/mycss.css}" />	 -->
+		<title>Congratulations!</title>
 	</head>
 	<style>
-	.side {
-		color: white;
-	}
-	
+  	/* Move down content because we have a fixed navbar that is 3.5rem tall */
 	body {
   		padding-top: 3.5rem;
   		background: #1f4287;
   		font-family: 'Poppins', sans-serif;
 	}
-
+	
+	.div1 {
+  		background: #21e6c1;
+  	}
+	
+	.jumbotron {
+		/*  background: #3aaf9f; */ 
+		background: #278ea5;
+	}
+	
+	.wave{
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		height: 100%;
+		z-index: -1;
+	}
+	
   </style>
+
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
@@ -47,38 +62,14 @@
     </div>
 </nav> 
 	<img class="wave" src="../static/images/wave.png" th:src="@{/images/wave.png}">
-	<div class="container" id="container">
-	<div class="form-container sign-in-container">
-		<form name="form" th:action="@{/register}" method="post" onsubmit="return verify()">
-			<h1>Create Account</h1>
-			<div class="social-container">
-				<a  href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-				<a  href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-				<a  href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+	<div class="container mt-5">
+      		<div class="alert alert-success" role="alert">
+				<h3>Congratulations! Your account has been activated and email is verified!</h3>
 			</div>
-			<span>or use your email for registration</span>
-			<!-- <input type="text" class="form-control" id="username" name="username"  placeholder="Username" required autofocus> -->
-			<input type="text" class="form-control" id="firstname" name="firstname"  placeholder="First Name" required autofocus>
-			<input type="text" class="form-control" id="lastname" name="lastname"   placeholder="Last Name" required autofocus>
-			<input type="text" class="form-control" id="phonenumber" name="phonenumber"  placeholder="Contact Number" required autofocus>
-			<input type="text" class="form-control" id="email" name="email"   placeholder="Email Address" required autofocus>
-			<input type="password" class="form-control" id="password"  name="password" placeholder="Password" required>	
-			<input type="password" class="form-control" id="password"  name="verifyPassword" placeholder="VerifyPassword" required>
-			<button class="btn" type="submit">Sign Up</button>
-		</form>
-	</div>
-	<div class="overlay-container">
-		<div class="overlay">
-			<div class="overlay-panel overlay-right">
-				<img src="../static/images/avatar.svg" th:src="@{/images/avatar.svg}">
-				<h1>Welcome Back!</h1>
-				<p>To keep connected with us please login with your personal info</p>
-			    <button class="ghost" id="signIn"><a class="side" th:href="@{/login}">Sign In</a></button>
+			<div class="text-center">
+				<a class="btn btn-success"  th:href="@{/login}" role="button">Go to Login</a>
 			</div>
-		</div>
 	</div>
-</div>
-
 </body>
 </html>
 

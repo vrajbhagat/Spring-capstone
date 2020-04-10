@@ -43,6 +43,22 @@
 		z-index: -1;
 	}
 	
+	.mapouter {
+	position: relative;
+	text-align: right;
+	height: 500px;
+	width: 600px;
+}
+
+	.gmap_canvas {
+	border: 5px solid;
+	border-radius: 5px;
+	overflow: hidden;
+	background: none !important;
+	height: 300px;
+	width: 500px;
+	}
+	
   </style>
 
   <body>
@@ -76,13 +92,26 @@
     <div class="jumbotron"> 
     	<div class="container">
       		<h1 class="display-3">Welcome to JuicePet!</h1><br>
-      		<p>Your Pet's Second Best Friend</p>
-      		<p><a class="btn btn-lg text-light" a href="/user" th:href="@{/user}" role="button">Book Appointment  &raquo;</a></p>
-			 <hr style="background: #f0f0f0;">
+			<div class="row">
+    		<div class="col-sm">
+    			<br><br><br>
+      			<p>Your Pet's Second Best Friend</p>
+      			<p><a class="btn btn-lg text-light" a href="/user" th:href="@{/user}" role="button">Book Appointment  &raquo;</a></p>
+    		</div>
+    		<div class="col-sm">
+      			<div class="mapouter">
+				<div class="gmap_canvas">
+			<iframe width="600" height="500" id="gmap_canvas"
+				src="https://maps.google.com/maps?q=Juicepet&t=&z=13&ie=UTF8&iwloc=&output=embed"
+				frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+					<a href="https://www.embedgooglemap.org">embedgooglemap.org</a>
+				</div>
+    		</div>
+    	</div>
+    	
+    	
     	</div>
 	</div>
-	<br>
-	
     </main>
     <footer class="container">
       <p class="text-light">Copyright &copy; Juicepet 2020-2021</p>

@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,8 +20,8 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @RequiredArgsConstructor
 @Builder
 @Entity
@@ -44,7 +43,14 @@ public class User {
 	private String encryptedPassword;
 	@NonNull
 	private Byte enabled;
-	
+//	@NonNull
+//	private boolean isEnabled;
+//	
+//	public User() {
+//        super();
+//        this.isEnabled =false;
+//    }
+//	
 	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER) 
 //	@ManyToMany(cascade=CascadeType.ALL) 
 	private List<Role> roles = new ArrayList<Role>();
