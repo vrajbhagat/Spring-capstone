@@ -27,6 +27,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		
+		 boolean enabled = true;
+		   boolean accountNonExpired = true;
+		    boolean credentialsNonExpired = true;
+		    boolean accountNonLocked = true;
 		// Find the user based on the user name
 		ca.sheridancollege.bhagatvr.beans.User user = userRepo.findByEmail(email); 
 		// If the user doesn't exist throw an exception
@@ -40,9 +44,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		for (Role role : user.getRoles()) {
 			grantList.add(new SimpleGrantedAuthority(role.getRolename()));
 		}
+		//return new org.springframework.security.core.userdetails.User( user.getEmail(), user.getEncryptedPassword(), grantList);
 		
 		// Create a user based on the information above.
-		UserDetails userDetails = (UserDetails) new User(user.getEmail(), user.getEncryptedPassword(), grantList);
+		UserDetails userDetails = (UserDetails) new User(user.getEmail(), user.getEncryptedPassword(), user.isEnabled(), 
+		          accountNonExpired, 
+		          credentialsNonExpired, 
+		          accountNonLocked, grantList);
 		return userDetails;
 		
 	}

@@ -41,10 +41,10 @@ public class User {
 	private String email;
 	@NonNull
 	private String encryptedPassword;
-	@NonNull
-	private Byte enabled;
 //	@NonNull
-//	private boolean isEnabled;
+//	private Byte enabled;
+    
+	private boolean isEnabled;
 //	
 //	public User() {
 //        super();

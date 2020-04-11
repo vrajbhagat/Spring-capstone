@@ -72,7 +72,9 @@ public class HomeController {
 	
 	@GetMapping("/login")
 	public String login() {
-		return "login";
+		
+			return "login";
+		
 	}
 	
 	@GetMapping("/access-denied")
@@ -101,9 +103,9 @@ public class HomeController {
 	    }
 	 
 	 @RequestMapping(value="/register", method = RequestMethod.POST)
-	 public ModelAndView registerUser(ModelAndView modelAndView, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String phonenumber,@RequestParam String email, @RequestParam String password) {
-		 	User user = new User(firstname, lastname, phonenumber, email, encodePassword(password), Byte.valueOf("0"));
-   	  	
+	 public ModelAndView registerUser(ModelAndView modelAndView, @RequestParam String firstname, @RequestParam String lastname, @RequestParam String phonenumber,@RequestParam String email, @RequestParam String password) {	
+		 User user = new User(firstname, lastname, phonenumber, email, encodePassword(password));
+   	  		user.setEnabled(false);
 	        User existingUser = userRepository.findByEmailIgnoreCase(user.getEmail());
 	        if(existingUser != null)
 	        {
@@ -146,7 +148,7 @@ public class HomeController {
 	        if(token != null)
 	        {
 	            User user = userRepository.findByEmailIgnoreCase(token.getUser().getEmail());
-	            user.setEnabled(Byte.valueOf("1"));
+	            user.setEnabled(true);
 	            userRepository.save(user);
 	            modelAndView.setViewName("accountVerified");
 	        }
