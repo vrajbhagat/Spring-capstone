@@ -126,7 +126,7 @@ public class HomeController {
 	            SimpleMailMessage mailMessage = new SimpleMailMessage();
 	            mailMessage.setTo(user.getEmail());
 	            mailMessage.setSubject("Complete Registration!");
-	            mailMessage.setFrom("Juicepetgrooming@gmail.com");
+	            mailMessage.setFrom("Juicepetgroomin@gmail.com");
 	            mailMessage.setText("To confirm your account with JuicePet, please click here : "
 	            +"https://spring-capstone.herokuapp.com/confirm-account?token="+confirmationToken.getConfirmationToken());
 
