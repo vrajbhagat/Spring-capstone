@@ -9,8 +9,8 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ca.sheridancollege.bhagatvr</groupId>
-	<artifactId>javaproject_v5</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>javaproject_v7</artifactId>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>Capstone Project</name>
 	<description>Capstone Project</description>
 
@@ -31,7 +31,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		 <dependency>
+		<dependency>
         	<groupId>org.springframework.boot</groupId>
         	<artifactId>spring-boot-starter-mail</artifactId>
     	</dependency>
@@ -70,11 +70,6 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.projectlombok</groupId> 
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
@@ -85,6 +80,7 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<finalName>juicepet-${pom.version}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
