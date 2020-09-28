@@ -82,17 +82,6 @@ public class HomeController {
 		return "error/access-denied";
 	}
 	
-//	
-//	@GetMapping("/register") public String goRegistration () { return "register";
-//	 }
-//	 
-//	 @PostMapping("/register") public String doRegistration(@RequestParam String
-//	 firstname, @RequestParam String lastname, @RequestParam String
-//	  phonenumber,@RequestParam String email, @RequestParam String password) { User
-//	  user = new User(firstname, lastname, phonenumber, email,
-//	  encodePassword(password), Byte.valueOf("1"));
-//	  user.getRoles().add(roleRepository.findByRolename("ROLE_USER"));
-//	  userRepository.save(user); return "redirect:/login"; }
 	
 	 @RequestMapping(value="/register", method = RequestMethod.GET)
 	 public ModelAndView displayRegistration(ModelAndView modelAndView, User user)
@@ -161,7 +150,86 @@ public class HomeController {
 	        return modelAndView;
 	    }
 	 
-	 	
+	
+	 @RequestMapping(value="/forgot-password", method=RequestMethod.GET)
+	    public ModelAndView displayResetPassword(ModelAndView modelAndView, User user) {
+	        modelAndView.addObject("user", user);
+	        modelAndView.setViewName("forgotPassword");
+	        return modelAndView;
+	    }
+	 
+	 
+	 
+	 @RequestMapping(value="/forgot-password", method=RequestMethod.POST)
+	    public ModelAndView forgotUserPassword(ModelAndView modelAndView, User user) {
+	        User existingUser = userRepository.findByEmailIgnoreCase(user.getEmail());
+	        if (existingUser != null) {
+	            // Create token
+	            ConfirmationToken confirmationToken = new ConfirmationToken(existingUser);
+
+	            // Save it
+	            confirmationTokenRepository.save(confirmationToken);
+
+	            // Create the email
+	            SimpleMailMessage mailMessage = new SimpleMailMessage();
+	            mailMessage.setTo(existingUser.getEmail());
+	            mailMessage.setSubject("Complete Password Reset!");
+	            mailMessage.setFrom("Juicepetgroomin@gmail.com");
+	            mailMessage.setText("To complete the password reset process, please click here: "
+	              + "https://spring-capstone.herokuapp.com/confirm-reset?token="+confirmationToken.getConfirmationToken());
+
+	            // Send the email
+	            emailSenderService.sendEmail(mailMessage);
+
+	            modelAndView.addObject("message", "Request to reset password received. Check your inbox for the reset link.");
+	            modelAndView.setViewName("successForgotPassword");
+
+	        } else {
+	            modelAndView.addObject("message", "This email address does not exist!");
+	            modelAndView.setViewName("error");
+	        }
+	        return modelAndView;
+	    }
+	 
+	 
+	 // Endpoint to confirm the token
+	    @RequestMapping(value="/confirm-reset", method= {RequestMethod.GET, RequestMethod.POST})
+	    public ModelAndView validateResetToken(ModelAndView modelAndView, @RequestParam("token")String confirmationToken) {
+	        ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
+
+	        if (token != null) {
+	            User user = userRepository.findByEmailIgnoreCase(token.getUser().getEmail());
+	            user.setEnabled(true);
+	            userRepository.save(user);
+	            modelAndView.addObject("user", user);
+	            modelAndView.addObject("email", user.getEmail());
+	            modelAndView.setViewName("resetPassword");
+	        } else {
+	            modelAndView.addObject("message", "The link is invalid or broken!");
+	            modelAndView.setViewName("error");
+	        }
+	        return modelAndView;
+	    }
+	    
+	    
+	    // Endpoint to update a user's password
+	    @RequestMapping(value = "/reset-password", method = RequestMethod.POST)
+	    public ModelAndView resetUserPassword(ModelAndView modelAndView, User user) {
+	        if (user.getEmail() != null) {
+	            // Use email to find user
+	            User tokenUser = userRepository.findByEmailIgnoreCase(user.getEmail());
+	            tokenUser.setEncryptedPassword(encodePassword(user.getEncryptedPassword()));
+	            userRepository.save(tokenUser);
+	            modelAndView.addObject("message", "Password successfully reset. You can now log in with the new credentials.");
+	            modelAndView.setViewName("successResetPassword");
+	        } else {
+	            modelAndView.addObject("message","The link is invalid or broken!");
+	            modelAndView.setViewName("error");
+	        }
+	        return modelAndView;
+	    }
+	 
+	 
 
 	
 	@PostMapping("/insertAppointments")
