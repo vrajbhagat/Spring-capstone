@@ -8,37 +8,40 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
 public class SecuirtyConfig extends WebSecurityConfigurerAdapter {
-	
+
 	@Autowired
 	private LoggingAccessDeniedHandler accessDeniedHandler;
 	
 	@Autowired
+	private CustomLoginSuccessHandler successHandler;
+
+	@Autowired
 	UserDetailsServiceImpl userDetailsService;
-	
+
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		// remove the two lines in production system
 		http.csrf().disable();
 		http.headers().frameOptions().disable();
 		
 		http.authorizeRequests()
-			.antMatchers("/user/**").hasRole("USER")
+			.antMatchers("/user/**").hasAnyAuthority("ROLE_USER")
+			.antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
 			.antMatchers(HttpMethod.POST, "/register").permitAll()
 			.antMatchers("/", "/js/**", "/confirm", "/register", "/css/**", "/images/**", "/**").permitAll() 
 			.antMatchers("/h2-console/**").permitAll()
-			.anyRequest().authenticated()
+			.anyRequest().authenticated()	
 			.and().formLogin()
 				.loginPage("/login")
+				.successHandler(successHandler)
 				.usernameParameter("email")
 				.permitAll() 
 			.and().logout()
@@ -49,19 +52,12 @@ public class SecuirtyConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.exceptionHandling()
 				.accessDeniedHandler(accessDeniedHandler);
+		
 	}
-	
+
 	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
-	
-//	@Override
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.inMemoryAuthentication()
-//			.passwordEncoder(NoOpPasswordEncoder.getInstance())
-//			.withUser("Frank").password("1234").roles("USER")
-//			.and()
-//			.withUser("manager").password("password").roles("MANAGER");
-//	}
+
 }

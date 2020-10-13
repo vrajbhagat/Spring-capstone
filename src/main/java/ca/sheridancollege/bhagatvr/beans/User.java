@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @Entity
 public class User {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -41,23 +41,12 @@ public class User {
 	private String email;
 	@NonNull
 	private String encryptedPassword;
-//	@NonNull
-//	private Byte enabled;
-    
+
 	private boolean isEnabled;
-//	
-//	public User() {
-//        super();
-//        this.isEnabled =false;
-//    }
-//	
-	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER) 
-//	@ManyToMany(cascade=CascadeType.ALL) 
+
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Role> roles = new ArrayList<Role>();
-	
-	//@OneToOne
-	//private Appointment appointment;
-//	
+
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Appointment> appointmentList;
 

@@ -19,12 +19,10 @@ public class LoggingAccessDeniedHandler implements AccessDeniedHandler {
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication(); 
-		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
 		if (auth != null) {
-			System.out.println(auth.getName()
-					+	" was trying to access protected resource: "
-					+	request.getRequestURI());
+			System.out.println(auth.getName() + " was trying to access protected resource: " + request.getRequestURI());
 		}
 		response.sendRedirect(request.getContextPath() + "/access-denied");
 

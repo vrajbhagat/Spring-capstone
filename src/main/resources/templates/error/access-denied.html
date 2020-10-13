@@ -1,13 +1,77 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="ISO-8859-1">
-<title>Access Denied Page</title>
-</head>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="../static/js/script.js" th:src="@{/js/script.js}"></script>
+		<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+		<script src="https://kit.fontawesome.com/a81368914c.js"></script>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">	
+		<title>Access Denied Page</title>
+	</head>
+	<style>
+  	/* Move down content because we have a fixed navbar that is 3.5rem tall */
+	body {
+  		padding-top: 3.5rem;
+  		background: #1f4287;
+  		font-family: 'Poppins', sans-serif;
+	}
+	
+	.div1 {
+  		background: #21e6c1;
+  	}
+	
+	.jumbotron {
+		/*  background: #3aaf9f; */ 
+		background: #278ea5;
+	}
+	
+	.wave{
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		height: 100%;
+		z-index: -1;
+	}
+	
+  </style>
+
 <body>
-	
-	<h1>Access denied</h1>
-	<p><a href="/" th:href="@{/}">Back to home page</a></p>
-	
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" >JuicePet</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="nav navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/}">Home</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/user}">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/register}">Register</a>
+        </li>
+      </ul>
+    </div>
+</nav> 
+	<img class="wave" src="../static/images/wave.png" th:src="@{/images/wave.png}">
+	<div class="container mt-5">
+      		<div class="alert alert-danger" role="alert">
+				<span>Access denied</span>
+			</div>
+			<div class="text-center">
+				<a class="btn btn-success"  th:href="@{/}" role="button">Back to home page</a>
+			</div>
+			<br>
+			<div class="text-center">
+				<a class="btn btn-success"  th:href="@{/admin}" role="button">Go to Admin page</a>
+			</div>
+	</div>
 </body>
 </html>
