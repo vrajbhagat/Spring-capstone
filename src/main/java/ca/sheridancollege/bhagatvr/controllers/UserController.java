@@ -30,9 +30,10 @@ public class UserController {
 	private UserRepository userRepository;
 	private TimeslotRepository timeslotRepository;
 
-
+	
+	// Display User Index Page
 	@GetMapping("/user")
-	public String userIndex(Model model, Authentication authentication) {
+	public String displayUserIndexPage (Model model, Authentication authentication) {
 		String name = authentication.getName();
 
 		User user1 = userRepository.findByEmail(name);
@@ -72,9 +73,9 @@ public class UserController {
 
 	}
 	
-	// Get User Details 
+	// display User Details 
 	@GetMapping("/update-profile")
-    public String userProfile (Model model, User user, Authentication authentication) {
+    public String displayUserProfile (Model model, User user, Authentication authentication) {
     	User user1 = userRepository.findByEmail(authentication.getName());
 		model.addAttribute("us", userRepository.findById(user1.getId()).get());
     	return "user/updateProfile";

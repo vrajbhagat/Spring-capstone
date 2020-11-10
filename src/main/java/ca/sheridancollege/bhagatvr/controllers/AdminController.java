@@ -19,13 +19,15 @@ public class AdminController {
 	private UserRepository userRepository; 
 	
     
+	// Display Admin Home Page
     @GetMapping("/admin")
-	public String adminHome() {
+	public String viewAdminHomePage() {
 		return "admin/home";
 	}
 	
+    // Find all Customers from Database
     @GetMapping("/findAllCustomer")
-	public String findAllCustomer (Model model, @ModelAttribute User user, @ModelAttribute Appointment appointment) {
+	public String findAllCustomerFromDB (Model model, @ModelAttribute User user, @ModelAttribute Appointment appointment) {
 		List<User> userList = userRepository.findAll();
 		model.addAttribute("userList", userList);
 		model.addAttribute("user", new User());

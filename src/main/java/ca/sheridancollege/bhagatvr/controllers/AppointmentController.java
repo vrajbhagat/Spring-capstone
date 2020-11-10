@@ -76,16 +76,17 @@ public class AppointmentController {
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 		mailMessage.setTo(existingUser.getEmail());
 		mailMessage.setSubject("Appointment Rescheduled!");
-		mailMessage.setFrom("Juicepetgrooming@gmail.com");
+		mailMessage.setFrom("Juicepetgroomin@gmail.com");
 		mailMessage.setText("Your appointment has been successfully changed. To Check your updated appointment, "
-				+ "please visit our website at : " + " http://localhost:8080/");
+				+ "please visit our website at : " + " https://spring-capstone.herokuapp.com/");
 
 		// Send the email
 		emailSenderService.sendEmail(mailMessage);
 		return "admin/editAppointment";
 	}
-
-	// Find All Appointments
+	
+	
+	// Find All Appointments of the User
 	@GetMapping("/viewAppointment")
 	public String viewAppointment(Model model, @ModelAttribute User user, Authentication authentication,
 			@ModelAttribute Appointment appointment) {
@@ -95,34 +96,34 @@ public class AppointmentController {
 		return "user/viewAppointment";
 	}
 
-	// Find All Appointments
+	// Find All Appointments from Database
 	@GetMapping("/findAllAppointment")
-	public String findAllAppointment(Model model, @ModelAttribute User user, @ModelAttribute Appointment appointment) {
+	public String findAllAppointmentFromDB (Model model, @ModelAttribute User user, @ModelAttribute Appointment appointment) {
 		List<Appointment> appointmentList = appointmentRepository.findAll();
 		model.addAttribute("appointmentList", appointmentList);
 		model.addAttribute("appointment", new Appointment());
 		return "admin/appointment";
 	}
 
-	// Find Today's Appointments
+	// Find Today's Appointments from Database
 	@GetMapping("/findTodayAppointment")
-	public String findTodayAppointment(Model model) {
+	public String findTodayAppointmentFromDB (Model model) {
 		List<Appointment> appointmentList = appointmentRepository.findTodayAppointment(LocalDate.now());
 		model.addAttribute("appointmentList", appointmentList);
 		return "admin/appointment";
 	}
 
-	// Query for sort Date
+	// Query for sort Date from Database
 	@GetMapping("/findByOrderByAppointmentDate")
-	public String findByOrderByAppointmentDate(Model model) {
+	public String findByOrderByAppointmentDateFromDB (Model model) {
 		List<Appointment> appointmentList = appointmentRepository.findByOrderByAppointmentDate();
 		model.addAttribute("appointmentList", appointmentList);
 		return "admin/appointment";
 	}
 
-	// Query for sort Date
+	// Query for sort Time from Database
 	@GetMapping("/findByOrderByAppointmentTimeDesc")
-	public String findByOrderByAppointmentTimeDesc(Model model) {
+	public String findByOrderByAppointmentTimeDescFromDB (Model model) {
 		List<Appointment> appointmentList = appointmentRepository.findByOrderByAppointmentTimeDesc();
 		model.addAttribute("appointmentList", appointmentList);
 		return "admin/appointment";
@@ -147,8 +148,9 @@ public class AppointmentController {
 		AppointmentExcelExporter excelExporter = new AppointmentExcelExporter(listappointments);
 		excelExporter.export(response);
 	}
+	
 
-	// Delete Appointments in the Admin Page
+	// Display and Delete Appointments in the Admin Page
 	@GetMapping("/deleteAppointment/{id}")
 	public String deleteAppointment(Model model, @PathVariable Long id) {
 		User user = userRepository.findById(appointmentRepository.findById(id).get().getUser().getId()).get();
@@ -173,7 +175,7 @@ public class AppointmentController {
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 		mailMessage.setTo(existingUser.getEmail());
 		mailMessage.setSubject("Appointment Cancelled!");
-		mailMessage.setFrom("Juicepetgrooming@gmail.com");
+		mailMessage.setFrom("Juicepetgroomin@gmail.com");
 		mailMessage.setText("Your appointment has been successfully cancelled. To Reschedule the appointment, "
 				+ "please visit our website. Thank you:)");
 

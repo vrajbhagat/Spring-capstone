@@ -20,18 +20,21 @@ public class HomeController {
 	
 	private DayRepository dayRepository;
 	private TimeslotRepository timeslotRepository;
-
+	
+	// Display Home Page
 	@GetMapping("/")
-	public String home() {
+	public String displayHomePage() {
 		generateDefaultTimeSlots();
 		return "home";
 	}
-
+	
+	// Display Access Denied Page
 	@GetMapping("/access-denied")
-	public String accessDenied() {
+	public String displayAccessDeniedPage() {
 		return "error/access-denied";
 	}
-
+	
+	// Generate TimeSlots for Appointments
 	private void generateDefaultTimeSlots() {
 		LocalTime startTime = LocalTime.of(9, 0); // 9AM start time
 		LocalTime endTime = LocalTime.of(19, 0); // 5PM end time

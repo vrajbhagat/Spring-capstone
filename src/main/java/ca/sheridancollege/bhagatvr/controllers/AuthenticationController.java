@@ -25,25 +25,29 @@ public class AuthenticationController {
 	private RoleRepository roleRepository;
 	private ConfirmationTokenRepository confirmationTokenRepository;
 	private EmailSenderService emailSenderService;
-
+	
+	// Method to make an Encrypted Password
 	private String encodePassword(String password) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		return encoder.encode(password);
 	}
-
+	
+	// Display Login Page
 	@GetMapping("/login")
-	public String login() {
+	public String displayLoginPage() {
 		return "login";
 
 	}
-
+	
+	// Display Forgot Password Page
 	@RequestMapping(value = "/forgot-password", method = RequestMethod.GET)
 	public ModelAndView displayResetPassword(ModelAndView modelAndView, User user) {
 		modelAndView.addObject("user", user);
 		modelAndView.setViewName("forgotPassword");
 		return modelAndView;
 	}
-
+	
+	// Forgot Password Functionality for the User
 	@RequestMapping(value = "/forgot-password", method = RequestMethod.POST)
 	public ModelAndView forgotUserPassword(ModelAndView modelAndView, User user) {
 		User existingUser = userRepository.findByEmailIgnoreCase(user.getEmail());
@@ -58,11 +62,11 @@ public class AuthenticationController {
 			SimpleMailMessage mailMessage = new SimpleMailMessage();
 			mailMessage.setTo(existingUser.getEmail());
 			mailMessage.setSubject("Complete Password Reset!");
-			mailMessage.setFrom("Juicepetgrooming@gmail.com");
-//			mailMessage.setText("To complete the password reset process, please click here: "
-//					+ "https://spring-capstone.herokuapp.com/confirm-reset?token=" + confirmationToken.getConfirmationToken());
+			mailMessage.setFrom("Juicepetgroomin@gmail.com");
 			mailMessage.setText("To complete the password reset process, please click here: "
-					+ "http://localhost:8080/confirm-reset?token=" + confirmationToken.getConfirmationToken());
+					+ "https://spring-capstone.herokuapp.com/confirm-reset?token=" + confirmationToken.getConfirmationToken());
+//			mailMessage.setText("To complete the password reset process, please click here: "
+//					+ "http://localhost:8080/confirm-reset?token=" + confirmationToken.getConfirmationToken());
 
 			// Send the email
 			emailSenderService.sendEmail(mailMessage);
@@ -77,7 +81,8 @@ public class AuthenticationController {
 		}
 		return modelAndView;
 	}
-
+	
+	// Validaes the Reset Token
 	@RequestMapping(value = "/confirm-reset", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView validateResetToken(ModelAndView modelAndView, @RequestParam("token") String confirmationToken) {
 		ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
@@ -95,7 +100,8 @@ public class AuthenticationController {
 		}
 		return modelAndView;
 	}
-
+	
+	// Reset User Password
 	@RequestMapping(value = "/reset-password", method = RequestMethod.POST)
 	public ModelAndView resetUserPassword(ModelAndView modelAndView, User user) {
 		if (user.getEmail() != null) {
@@ -112,14 +118,16 @@ public class AuthenticationController {
 		}
 		return modelAndView;
 	}
-
+	
+	// Display Register Page
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public ModelAndView displayRegistration(ModelAndView modelAndView, User user) {
 		modelAndView.addObject("user", user);
 		modelAndView.setViewName("register");
 		return modelAndView;
 	}
-
+	
+	// Register User 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ModelAndView registerUser(ModelAndView modelAndView, @RequestParam String firstname,
 			@RequestParam String lastname, @RequestParam String phonenumber, @RequestParam String email,
@@ -143,11 +151,11 @@ public class AuthenticationController {
 			SimpleMailMessage mailMessage = new SimpleMailMessage();
 			mailMessage.setTo(user.getEmail());
 			mailMessage.setSubject("Complete Registration!");
-			mailMessage.setFrom("Juicepetgrooming@gmail.com");
-//			mailMessage.setText("To confirm your account with JuicePet, please click here : "
-//					+ "https://spring-capstone.herokuapp.com/confirm-account?token=" + confirmationToken.getConfirmationToken());
+			mailMessage.setFrom("Juicepetgroomin@gmail.com");
 			mailMessage.setText("To confirm your account with JuicePet, please click here : "
-					+ "http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken());
+					+ "https://spring-capstone.herokuapp.com/confirm-account?token=" + confirmationToken.getConfirmationToken());
+//			mailMessage.setText("To confirm your account with JuicePet, please click here : "
+//					+ "http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken());
 
 			// https://spring-capstone.herokuapp.com
 
@@ -160,7 +168,9 @@ public class AuthenticationController {
 
 		return modelAndView;
 	}
-
+	
+	
+	// Confirm User Account with the token
 	@RequestMapping(value = "/confirm-account", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token") String confirmationToken) {
 		ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
