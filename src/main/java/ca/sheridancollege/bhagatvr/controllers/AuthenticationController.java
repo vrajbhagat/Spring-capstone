@@ -58,9 +58,11 @@ public class AuthenticationController {
 			SimpleMailMessage mailMessage = new SimpleMailMessage();
 			mailMessage.setTo(existingUser.getEmail());
 			mailMessage.setSubject("Complete Password Reset!");
-			mailMessage.setFrom("Juicepetgroomin@gmail.com");
+			mailMessage.setFrom("Juicepetgrooming@gmail.com");
+//			mailMessage.setText("To complete the password reset process, please click here: "
+//					+ "https://spring-capstone.herokuapp.com/confirm-reset?token=" + confirmationToken.getConfirmationToken());
 			mailMessage.setText("To complete the password reset process, please click here: "
-					+ "https://spring-capstone.herokuapp.com/confirm-reset?token=" + confirmationToken.getConfirmationToken());
+					+ "http://localhost:8080/confirm-reset?token=" + confirmationToken.getConfirmationToken());
 
 			// Send the email
 			emailSenderService.sendEmail(mailMessage);
@@ -141,9 +143,11 @@ public class AuthenticationController {
 			SimpleMailMessage mailMessage = new SimpleMailMessage();
 			mailMessage.setTo(user.getEmail());
 			mailMessage.setSubject("Complete Registration!");
-			mailMessage.setFrom("Juicepetgroomin@gmail.com");
+			mailMessage.setFrom("Juicepetgrooming@gmail.com");
+//			mailMessage.setText("To confirm your account with JuicePet, please click here : "
+//					+ "https://spring-capstone.herokuapp.com/confirm-account?token=" + confirmationToken.getConfirmationToken());
 			mailMessage.setText("To confirm your account with JuicePet, please click here : "
-					+ "https://spring-capstone.herokuapp.com/confirm-account?token=" + confirmationToken.getConfirmationToken());
+					+ "http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken());
 
 			// https://spring-capstone.herokuapp.com
 

@@ -37,13 +37,15 @@ public class AppointmentController {
 	private TimeslotRepository timeslotRepository;
 	private EmailSenderService emailSenderService;
 
+	// Insert Appointments by the User
 	@PostMapping("/insertAppointments")
 	public String insertAppointments(Model model, @ModelAttribute Appointment appointment,
-			Authentication authentication, @RequestParam Long uid) {
-		timeslotRepository.updateTimeSlot(appointment.getAppointmentTime()).setFlag(false);
+			Authentication authentication, @RequestParam Long uid, @RequestParam Long timeselect) {
 		String name = authentication.getName();
 		User user1 = userRepository.findByEmail(name);
 		appointment.setUser(user1);
+		appointment.setAppointmentTime(timeslotRepository.findById(timeselect).get().getTime().toString());
+		appointment.setTime(timeslotRepository.findById(timeselect).get());
 		appointment = appointmentRepository.save(appointment);
 		user1.getAppointmentList().add(appointment);
 		userRepository.save(user1);
@@ -56,6 +58,34 @@ public class AppointmentController {
 		return "user/index";
 	}
 
+	// Update Appointments by the Admin
+	@PostMapping("/updateAppointment")
+	public String updateAppointment(Model model, @ModelAttribute Appointment appointment,
+			@RequestParam Long timeselect) {
+		appointment.setAppointmentTime(timeslotRepository.findById(timeselect).get().getTime().toString());
+		appointment.setTime(timeslotRepository.findById(timeselect).get());
+		appointment = appointmentRepository.save(appointment);
+		List<Appointment> appointmentList = appointmentRepository.findAll();
+		model.addAttribute("appointmentList", appointmentList);
+		model.addAttribute("appointment", new Appointment());
+		model.addAttribute("timelist", timeslotRepository.listTimeSlot(true));
+
+		User existingUser = userRepository.findByEmailIgnoreCase(appointment.getUser().getEmail());
+
+		// Create the email
+		SimpleMailMessage mailMessage = new SimpleMailMessage();
+		mailMessage.setTo(existingUser.getEmail());
+		mailMessage.setSubject("Appointment Rescheduled!");
+		mailMessage.setFrom("Juicepetgrooming@gmail.com");
+		mailMessage.setText("Your appointment has been successfully changed. To Check your updated appointment, "
+				+ "please visit our website at : " + " http://localhost:8080/");
+
+		// Send the email
+		emailSenderService.sendEmail(mailMessage);
+		return "admin/editAppointment";
+	}
+
+	// Find All Appointments
 	@GetMapping("/viewAppointment")
 	public String viewAppointment(Model model, @ModelAttribute User user, Authentication authentication,
 			@ModelAttribute Appointment appointment) {
@@ -65,6 +95,7 @@ public class AppointmentController {
 		return "user/viewAppointment";
 	}
 
+	// Find All Appointments
 	@GetMapping("/findAllAppointment")
 	public String findAllAppointment(Model model, @ModelAttribute User user, @ModelAttribute Appointment appointment) {
 		List<Appointment> appointmentList = appointmentRepository.findAll();
@@ -73,6 +104,7 @@ public class AppointmentController {
 		return "admin/appointment";
 	}
 
+	// Find Today's Appointments
 	@GetMapping("/findTodayAppointment")
 	public String findTodayAppointment(Model model) {
 		List<Appointment> appointmentList = appointmentRepository.findTodayAppointment(LocalDate.now());
@@ -96,6 +128,7 @@ public class AppointmentController {
 		return "admin/appointment";
 	}
 
+	// Export appointments
 	@GetMapping("/export-appointments")
 	public void exportToExcelAppointment(HttpServletResponse response) throws IOException {
 		response.setContentType("application/octet-stream");
@@ -115,6 +148,7 @@ public class AppointmentController {
 		excelExporter.export(response);
 	}
 
+	// Delete Appointments in the Admin Page
 	@GetMapping("/deleteAppointment/{id}")
 	public String deleteAppointment(Model model, @PathVariable Long id) {
 		User user = userRepository.findById(appointmentRepository.findById(id).get().getUser().getId()).get();
@@ -139,7 +173,7 @@ public class AppointmentController {
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 		mailMessage.setTo(existingUser.getEmail());
 		mailMessage.setSubject("Appointment Cancelled!");
-		mailMessage.setFrom("Juicepetgroomin@gmail.com");
+		mailMessage.setFrom("Juicepetgrooming@gmail.com");
 		mailMessage.setText("Your appointment has been successfully cancelled. To Reschedule the appointment, "
 				+ "please visit our website. Thank you:)");
 
@@ -147,5 +181,15 @@ public class AppointmentController {
 		emailSenderService.sendEmail(mailMessage);
 
 		return "admin/appointment";
+	}
+	
+	// Display edit Appointments in Admin Page
+	@GetMapping("/editAppointment/{id}")
+	public String editAppointment(Model model, @PathVariable Long id) {
+		model.addAttribute("timelist", timeslotRepository.listTimeSlot(true));
+		model.addAttribute("appointmentList", appointmentRepository.findAll());
+		model.addAttribute("appointment", appointmentRepository.findById(id).get());
+		model.addAttribute("at", appointmentRepository.findById(id).get().getAppointmentTime());
+		return "admin/editAppointment";
 	}
 }

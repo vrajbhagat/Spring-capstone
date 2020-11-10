@@ -1,0 +1,197 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>User Profile</title>
+	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/jumbotron/">
+    <!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">	
+	<link href="/css/profile.css" rel="stylesheet">
+   
+  </head>
+  
+  <style>
+  	/* Move down content because we have a fixed navbar that is 3.5rem tall */
+	body {
+  		padding-top: 3.5rem;
+  		background: #1f4287;
+  		font-family: 'Poppins', sans-serif;
+	}
+	
+	.div1 {
+  		background: #21e6c1;
+  	}
+	
+	.jumbotron {
+		/*  background: #3aaf9f; */ 
+		background: #278ea5;
+	}
+	
+	.btn1 {
+		background: #071e3d;		
+	}
+	
+	.wave{
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		height: 100%;
+		z-index: -1;
+	}
+	
+	$(
+	function () { $('body ').on ('click', '.odom-submit ', function (e ) {
+		$(this .form).submit(); $('#myModal ').modal('hide');
+	
+	}
+	);
+	}
+	);
+	
+  </style>
+
+  <body>
+	
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" >JuicePet</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="nav navbar-nav mr-auto">
+      	<!-- <li class="nav-item">
+          <a class="nav-link" th:href="@{/}">Home</a>
+        </li> -->
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/user}">Book Appointment</a>
+        </li>
+          <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-user"></i> Profile </a>
+        <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+          <a class="dropdown-item" th:href="@{/update-profile}">My account</a>
+          <a class="dropdown-item" th:href="@{/logout}">Log out</a>
+        </div>
+      </li>
+      </ul>
+    </div>
+</nav> 
+	<img class="wave" src="../static/images/wave.png" th:src="@{/images/wave.png}">	
+    <main role="main" class="container">
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron my-3">
+    
+    <div class="container light-style flex-grow-1 container-p-y"> 
+	
+	<h4 class="font-weight-bold" style=" padding-left:30px;"> Account settings </h4>
+	<form class="form-container" style=" padding:30px; padding-bottom:30px;" method="get" th:action="@{/update-profile}" th:object="${user}"> 
+    <div class="card overflow-hidden">
+      <div class="row no-gutters row-bordered row-border-light">
+        <div class="col-md-3 pt-0">
+          <div class="list-group list-group-flush account-settings-links">
+            <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">General</a>
+            <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Change password</a>
+          </div>
+        </div>
+        <div class="col-md-9">
+          <div class="tab-content">
+            <div class="tab-pane fade active show" id="account-general">
+			
+              <div class="card-body media align-items-center">
+                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="d-block ui-w-80">
+                <div class="media-body ml-4">
+                  <label class="btn btn-outline-primary">
+                    Upload new photo
+                    <input type="file" class="account-settings-fileinput">
+                  </label> &nbsp;
+                  <button type="button" class="btn btn-default md-btn-flat">Reset</button>
+
+                  <div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
+                </div>
+              </div>
+              <hr class="border-light m-0">
+			
+              <div class="card-body">
+              	<input  type="hidden" class="form-control"  placeholder="id" name="id" th:value="${us.id}">
+                <div class="form-group">
+                  <label class="form-label">First Name</label>
+                  <input type="text" class="form-control mb-1" name="firstname"  th:value="${us.firstname}" placeholder="First Name" readonly>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Last Name</label>
+                  <input type="text" class="form-control" name="lastname"  th:value="${us.lastname}" placeholder="Last Name" readonly>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">E-mail</label>
+                  <input type="text" class="form-control mb-1" name="email"  th:value="${us.email}" placeholder="Email Address" readonly>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Contact</label>
+                  <input type="text" class="form-control mb-1" name="phonenumber" th:value="${us.phonenumber}" placeholder="Phone Number" readonly>
+                </div>
+              </div>
+
+            </div>
+            <div class="tab-pane fade" id="account-change-password">
+              <div class="card-body pb-2">
+
+               <!--  <div class="form-group">
+                  <label class="form-label">Current password</label>
+                  <input type="hidden" class="form-control" name="password" th:value="${us.encryptedPassword}" placeholder="Password">
+                </div> -->
+
+                <div class="form-group">
+                  <label class="form-label">New password</label>
+                  <input type="password"  name="newPassword" class="form-control">
+                </div>
+
+               <div class="form-group">
+                  <label class="form-label">Repeat new password</label>
+                  <input type="password" name="verifyPassword" class="form-control">
+                </div>
+
+              </div>
+            </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        
+         <div class="text-right mt-3">
+      		<button type="submit" class="btn btn-success">Save changes</button>&nbsp;
+      		<button type="button" class="btn btn-danger">Cancel</button>
+    	</div>
+        </form>
+      </div>
+    
+    </div>
+    
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+				integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+				crossorigin="anonymous"></script>
+			<script
+				src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+				integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+				crossorigin="anonymous"></script>
+			<script
+				src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+				integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+				crossorigin="anonymous"></script>
+	<br>
+    </main>
+    <footer class="container">
+      <p class="text-light">Copyright &copy; JuicePet 2020-2021</p>
+    </footer>
+    </body>
+</html>

@@ -1,0 +1,224 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author"
+	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+<meta name="generator" content="Jekyll v4.1.1">
+<title>Admin Edit Appointment</title>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+	integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+	crossorigin="anonymous"></script>
+<link rel="canonical"
+	href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
+
+<!-- Bootstrap core CSS -->
+<link href="/css/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+.bd-placeholder-img {
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+@media ( min-width : 768px) {
+	.bd-placeholder-img-lg {
+		font-size: 3.5rem;
+	}
+}
+</style>
+<!-- Custom styles for this template -->
+<link href="/css/dashboard.css" rel="stylesheet">
+</head>
+<body>
+	<nav
+		class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+		<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3">JuicePet</a>
+		<button class="navbar-toggler position-absolute d-md-none collapsed"
+			type="button" data-toggle="collapse" data-target="#sidebarMenu"
+			aria-controls="sidebarMenu" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<input class="form-control form-control-dark w-100" type="text"
+			placeholder="Search" aria-label="Search">
+		<ul class="navbar-nav px-3">
+			<li class="nav-item text-nowrap"><a class="nav-link"
+				th:href="@{/logout}">Sign out</a></li>
+		</ul>
+	</nav>
+
+	<div class="container-fluid">
+		<div class="row">
+			<nav id="sidebarMenu"
+				class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+				<div class="sidebar-sticky pt-3">
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link" th:href="@{/admin}">
+								<span data-feather="home"></span> Dashboard
+						</a></li>
+						<li class="nav-item"><a class="nav-link active"
+							th:href="@{/findTodayAppointment}"> <span data-feather="file"></span>
+								Appointments <span class="sr-only">(current)</span>
+						</a></li>
+						<li class="nav-item"><a class="nav-link"
+							th:href="@{/findAllCustomer}"> <span data-feather="users"></span>
+								Customers
+						</a></li>
+					</ul>
+				</div>
+			</nav>
+
+			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+				<div
+					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+					<h1 class="h2">Edit Appointments</h1>
+					<div class="btn-toolbar mb-2 mb-md-0">
+						<a class="btn btn-sm btn-outline-secondary text-primary"
+							th:href="@{/findTodayAppointment}" role="button"> <span
+							data-feather="calendar"></span>View Appointments
+						</a>
+					</div>
+				</div>
+
+				<div class="alert alert-success" id="updateAppointment"
+					style="display: none;">
+					<strong>Successful!!</strong> Appointment Updated !!!!
+				</div>
+
+				<form class="form-container"
+					style="padding: 30px; padding-bottom: 30px;" method="post"
+					th:action="@{/updateAppointment}" th:object="${appointment}">
+
+					<!-- <input  type="text" class="form-control"  placeholder="a" name="aa"  th:value="${at} ">  -->
+					<!-- <input  type="text" class="form-control"  placeholder="aaa" name="aaa"  th:field="*{appointmentTime}"> -->
+					<input type="hidden" class="form-control" placeholder="userid"
+						name="userid" th:field="*{user.id}"> <input type="hidden"
+						class="form-control" placeholder="id" name="id" th:value="${id}"
+						th:field="*{id}">
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label class="text-primary" for="appointmentDate">Appointment
+								Date:</label> <input type="date" id="datefield" min='2020-01-01'
+								class="form-control" name="appointmentDate"
+								th:field="*{appointmentDate}" placeholder="Appointment Date">
+						</div>
+						<div class="form-group col-md-6">
+							<label class="text-primary" for="appointmentTime">Appointment
+								Time:</label> <select id="appointmentTime" class="form-control"
+								name="timeselect">
+							</select>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label class="text-primary" for="breed">Select Breed:</label> <select
+								id="breed" class="form-control" name="breed" th:field="*{breed}">
+								<option th:value="''">Select Animal Type</option>
+								<option th:value="'Dog'">Dog</option>
+								<option th:value="'Cat'">Cat</option>
+							</select>
+						</div>
+						<div class="form-group col-md-6">
+							<label class="text-primary" for="services">Grooming
+								Services:</label> <select id="services" class="form-control"
+								name="services" th:field="*{services}">
+								<option th:value="''">Choose Services</option>
+								<option th:value="'Full Grooming'">Full Grooming</option>
+								<option th:value="'Basic Grooming'">Basic Grooming</option>
+							</select>
+						</div>
+
+					</div>
+					<br>
+					<div class="text-center">
+						<button type="submit" class="btn btn-success btn-lg text-light"
+							onclick="myFunction()">Update Appointment</button>
+					</div>
+
+					<script>
+					function myFunction() {
+						   $('#updateAppointment').show();
+						   $('#updateAppointment').fadeIn(1000);
+					}
+			</script>
+
+					<script>
+			var today = new Date();
+			
+			var dd = today.getDate();
+			var mm = today.getMonth() + 1; //January is 0!
+			var yyyy = today.getFullYear();
+			
+			if (dd < 10) {
+				dd = '0' + dd
+			}
+			if (mm < 10) {
+				mm = '0' + mm
+			}
+
+			today = yyyy + '-' + mm + '-' + dd;
+			document.getElementById("datefield").setAttribute("min", today);
+			
+			var dateField = document.getElementById("datefield");
+			var timeSlotId = document.getElementById("timeslotid");
+			var appTime = document.getElementById("appointmentTime");
+				console.log(dateField.value);
+				const year = dateField.value.substring(0,4)
+				const month = dateField.value.substring(5,7)
+				const day = dateField.value.substring(8);
+				 var xmlHttp = new XMLHttpRequest();
+				    xmlHttp.open( "GET", "http://localhost:8080/getTimeSlots/"+year+"/"+month+"/"+day, true ); // false for synchronous request
+				    xmlHttp.send();
+				    xmlHttp.onreadystatechange = e=>{
+				    	console.log(xmlHttp);
+					    const timeSlots = JSON.parse(xmlHttp.response);
+					    console.log(timeSlots);
+					    const ts = timeSlots.ts;
+					    appTime.innerHTML=""
+					    for (const t in ts){
+					    	var date = ts[t].time;
+					    	var formatdate = moment(date, 'HH:mm:ss').format('hh:mm a')
+					    	appTime.innerHTML+="<option value="+ts[t].id+">"+formatdate+"</option>"
+					    }
+				    }
+		</script>
+
+					<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+						integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+						crossorigin="anonymous"></script>
+					<script
+						src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+						integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+						crossorigin="anonymous"></script>
+					<script
+						src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+						integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+						crossorigin="anonymous"></script>
+				</form>
+
+
+			</main>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script>
+	<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+	<script src="/css/dist/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+	<script src="/js/dashboard.js"></script>
+</body>
+</html>

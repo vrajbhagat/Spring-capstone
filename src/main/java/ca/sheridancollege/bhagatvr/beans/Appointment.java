@@ -37,5 +37,8 @@ public class Appointment {
 
 	@OneToOne
 	private User user;
+	
+	@OneToOne
+	private Timeslot time;
 
 }

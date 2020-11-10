@@ -1,154 +1,199 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v4.1.1">
-    <title>Admin Appointment Panel</title>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author"
+	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+<meta name="generator" content="Jekyll v4.1.1">
+<title>Admin Appointment Panel</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
+<link rel="canonical"
+	href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
 
-    <!-- Bootstrap core CSS -->
+<!-- Bootstrap core CSS -->
 <link href="/css/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
+<style>
+.bd-placeholder-img {
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
-    <!-- Custom styles for this template -->
-    <link href="/css/dashboard.css" rel="stylesheet">
-  </head>
-  <body>
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3">JuicePet</a>
-  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-  <ul class="navbar-nav px-3">
-    <li class="nav-item text-nowrap">
-      <a class="nav-link" th:href="@{/logout}">Sign out</a>
-    </li>
-  </ul>
-</nav>
+@media ( min-width : 768px) {
+	.bd-placeholder-img-lg {
+		font-size: 3.5rem;
+	}
+}
+</style>
+<!-- Custom styles for this template -->
+<link href="/css/dashboard.css" rel="stylesheet">
+</head>
+<body>
+	<nav
+		class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+		<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3">JuicePet</a>
+		<button class="navbar-toggler position-absolute d-md-none collapsed"
+			type="button" data-toggle="collapse" data-target="#sidebarMenu"
+			aria-controls="sidebarMenu" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<input class="form-control form-control-dark w-100" type="text"
+			placeholder="Search" aria-label="Search">
+		<ul class="navbar-nav px-3">
+			<li class="nav-item text-nowrap"><a class="nav-link"
+				th:href="@{/logout}">Sign out</a></li>
+		</ul>
+	</nav>
 
-<div class="container-fluid">
-  <div class="row">
-    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-      <div class="sidebar-sticky pt-3">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link" th:href="@{/admin}">
-              <span data-feather="home"></span>
-              Dashboard
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" th:href="@{/findTodayAppointment}">
-              <span data-feather="file"></span>
-              Appointments <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" th:href="@{/findAllCustomer}">
-              <span data-feather="users"></span>
-              Customers
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="bar-chart-2"></span>
-              Reports
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+	<div class="container-fluid">
+		<div class="row">
+			<nav id="sidebarMenu"
+				class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+				<div class="sidebar-sticky pt-3">
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link" th:href="@{/admin}">
+								<span data-feather="home"></span> Dashboard
+						</a></li>
+						<li class="nav-item"><a class="nav-link active"
+							th:href="@{/findTodayAppointment}"> <span data-feather="file"></span>
+								Appointments <span class="sr-only">(current)</span>
+						</a></li>
+						<li class="nav-item"><a class="nav-link"
+							th:href="@{/findAllCustomer}"> <span data-feather="users"></span>
+								Customers
+						</a></li>
+					</ul>
+				</div>
+			</nav>
 
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-      	<h1 class="h2">Appointments</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-          <div class="btn-group mr-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-            <a class="btn btn-sm btn-outline-secondary" th:href="@{/export-appointments}" role="button">Export</a>
-          </div>
-          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown">
-          	<span data-feather="calendar"></span> Sort By
-          </button>
-          	<div class="dropdown-menu">
-          				<a class="dropdown-item" th:href="@{/findTodayAppointment}">Today</a>
-					    <a class="dropdown-item" th:href="@{/findAllAppointment}">All</a>
-					    <a class="dropdown-item" th:href="@{/findByOrderByAppointmentDate}">Appointment Date</a>
-					    <a class="dropdown-item" th:href="@{/findByOrderByAppointmentTimeDesc}">Appointment Time</a>
-  			</div>
-        </div>
-	  </div>
-	  
-	  <div class="alert alert-success" id="passwordsNoMatchRegister" style="display:none;">
-    		<strong>Successful!!</strong> Appointment Cancelled:(. Please check the email.
-  	</div>
-			
-      <div class="table-responsive">
-        <table class="table table-light table-hover">
-          <thead class="table-dark">
-            <tr>
-              <!-- <th>#</th> -->
-              <th>Name</th>
-              <th>Email address</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Breed</th>
-              <th>Services</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-           <tr th:each="appointment : ${appointmentList}">
-           		<!-- <td th:text="${appointment.id}">1</td> -->
-           		<td th:text="${appointment.user.firstname} + ' ' + ${appointment.user.lastname}">Name</td>
-           		<td th:text="${appointment.user.email}">Email Address</td>
-				<td th:text="${appointment.appointmentDate}">Appointment Date</td>
-				<td th:text="${appointment.appointmentTime}">Appointment Time</td>
-				<td th:text="${appointment.breed}">Animal Type</td> 
-				<td th:text="${appointment.services}">Services</td>
-				<td> <a class="btn btn-warning" href="#" role="button">Edit</a></td>
-				<td><a onclick="myFunction()" class="btn btn-warning" th:href="@{/deleteAppointment/}+${appointment.id}">Delete</a></td> 
-			</tr> 
-          </tbody>
-        </table>
-      </div>
-    </main>
-  </div>
-</div>
-<script>
+			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+				<div
+					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+					<h1 class="h2">Appointments</h1>
+					<div class="btn-toolbar mb-2 mb-md-0">
+						<div class="btn-group mr-2">
+							<button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+							<a class="btn btn-sm btn-outline-secondary"
+								th:href="@{/export-appointments}" role="button">Export</a>
+						</div>
+						<button type="button"
+							class="btn btn-sm btn-outline-secondary dropdown-toggle"
+							data-toggle="dropdown">
+							<span data-feather="calendar"></span> Sort By
+						</button>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" th:href="@{/findTodayAppointment}">Today</a>
+							<a class="dropdown-item" th:href="@{/findAllAppointment}">All</a>
+							<a class="dropdown-item"
+								th:href="@{/findByOrderByAppointmentDate}">Appointment Date</a>
+							<a class="dropdown-item"
+								th:href="@{/findByOrderByAppointmentTimeDesc}">Appointment
+								Time</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="alert alert-success" id="passwordsNoMatchRegister"
+					style="display: none;">
+					<strong>Successful!!</strong> Appointment Cancelled:(. Please check
+					the email.
+				</div>
+
+				<div class="alert alert-success" id="updateAppointment"
+					style="display: none;">
+					<strong>Successful!!</strong> Appointment Updated !!!!
+				</div>
+
+				<div class="table-responsive">
+					<table class="table table-light table-hover">
+						<thead class="table-dark">
+							<tr>
+								<!-- <th>#</th> -->
+								<th>Name</th>
+								<th>Email address</th>
+								<th>Date</th>
+								<th>Time</th>
+								<th>Breed</th>
+								<th>Services</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:if="${appointmentList.empty}">
+								<td colspan=8>
+									<div class="alert alert-info text-center" role="alert">No
+										Appointments Available</div>
+								</td>
+							</tr>
+							<tr th:each="appointment : ${appointmentList}">
+								<!-- <td th:text="${appointment.id}">1</td> -->
+								<td
+									th:text="${appointment.user.firstname} + ' ' + ${appointment.user.lastname}">Name</td>
+								<td th:text="${appointment.user.email}">Email Address</td>
+								<td th:text="${appointment.appointmentDate}">Appointment
+									Date</td>
+								<td class="aptTime" th:text="${appointment.appointmentTime}">Appointment
+									Time</td>
+								<td th:text="${appointment.breed}">Animal Type</td>
+								<td th:text="${appointment.services}">Services</td>
+								<td><a class="btn btn-warning"
+									th:href="@{/editAppointment/}+${appointment.id}" role="button">Edit</a></td>
+								<td><a onclick="myFunction()" class="btn btn-danger"
+									th:href="@{/deleteAppointment/}+${appointment.id}">Delete</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</main>
+		</div>
+	</div>
+	<script>
 function myFunction() {
 	   $('#passwordsNoMatchRegister').show();
 	   $('#passwordsNoMatchRegister').fadeIn(1000);
 	   setTimeout(function() { 
 	       $('#passwordsNoMatchRegister').fadeOut(1000); 
 	   }, 5000);
-	}
+}
 </script>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/css/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-        <script src="/js/dashboard.js"></script></body>
+	<script>
+				const allTime = document.getElementsByClassName("aptTime");
+				const tConvert = time => {
+			         // Check correct time format and split into components
+			        time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+			        if (time.length > 1) { // If time format correct
+			            time = time.slice(1); // Remove full string match value
+			            time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+			            time[0] = +time[0] % 12 || 12; // Adjust hours
+			        }
+			        return time.join(''); // return adjusted time or original string 
+			
+			    }
+				for(e in allTime){
+					allTime[e].innerText = tConvert(allTime[e].innerText);
+				}
+</script>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script>
+	<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+	<script src="/css/dist/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+	<script src="/js/dashboard.js"></script>
+</body>
 </html>

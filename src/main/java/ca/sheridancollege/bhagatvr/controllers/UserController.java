@@ -14,6 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import ca.sheridancollege.bhagatvr.beans.Appointment;
 import ca.sheridancollege.bhagatvr.beans.User;
@@ -49,7 +50,8 @@ public class UserController {
 		model.addAttribute("timelist", timeslotRepository.listTimeSlot(true));
 		return "user/index";
 	}
-
+	
+	// Export User's 
 	@GetMapping("/export-users")
 	public void exportToExcelUser(HttpServletResponse response) throws IOException {
 		response.setContentType("application/octet-stream");
@@ -69,5 +71,13 @@ public class UserController {
 		excelExporter.export(response);
 
 	}
+	
+	// Get User Details 
+	@GetMapping("/update-profile")
+    public String userProfile (Model model, User user, Authentication authentication) {
+    	User user1 = userRepository.findByEmail(authentication.getName());
+		model.addAttribute("us", userRepository.findById(user1.getId()).get());
+    	return "user/updateProfile";
+    }
 
 }
