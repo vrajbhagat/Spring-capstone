@@ -78,7 +78,7 @@ public class AppointmentController {
 		mailMessage.setSubject("Appointment Rescheduled!");
 		mailMessage.setFrom("Juicepetgroomin@gmail.com");
 		mailMessage.setText("Your appointment has been successfully changed. To Check your updated appointment, "
-				+ "please visit our website at : " + " https://spring-capstone.herokuapp.com/");
+				+ "please visit our website at : " + " https://spring-capstone.herokuapp.com/login");
 
 		// Send the email
 		emailSenderService.sendEmail(mailMessage);
